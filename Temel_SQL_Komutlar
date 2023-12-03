@@ -1,0 +1,146 @@
+select * from Employees
+select FirstName as [Adı] , LastName as [Soyadı] from Employees
+
+-- Adı ve soyadını birleştir
+select FirstName +' '+ Lastname as [Adı Soyadı] ,City as [Şehir]
+from Employees
+
+select * from Products
+
+-- Products adlarını büyük harfe çevir
+-- UPPER
+select upper(ProductName) from Products
+
+-- Products adlarını küçük harfe çevir
+-- LOWER
+select lower(ProductName) as [Ürün Adı] ,UnitsInStock
+from Products
+
+-- Verilerin sıralanması
+-- ORDER BY
+-- Ad , ücret ve stok miktarı yazdır artan ücrete göre sırala
+select ProductName , UnitPrice , UnitsInStock
+from Products
+order by UnitPrice ASC
+
+-- Ad , ücret ve stok miktarı yazdır azalan ücrete göre sırala
+select ProductName as [Ad] , UnitPrice as [Ücret] , UnitsInStock as [Stok Miktarı]
+from Products
+order by UnitPrice DESC
+
+-- Doğum tarihine göre sırala ve adı soyadı birleştir
+select * from Employees
+
+select FirstName +' '+ Lastname as [Ad Soyad] , BirthDate as [Doğum Tarihi]
+from Employees
+order by BirthDate ASC
+
+-- UnitPrice'a göre azalan sırayla , UnitInStock' göre artan sırayla sırala
+select ProductName, UnitPrice , UnitsInStock
+from Products
+order by UnitPrice DESC , UnitsInStock ASC
+
+-- Customers'i yazdırır
+select * from Customers
+
+-- Şehri Madrid olanlar gelsin
+select CompanyName , City , Country
+from Customers
+where City = 'Madrid'
+
+-- Şehri Madrid olanlar veya şehri Berlin olanlar gelsin
+select CompanyName , City , Country
+from Customers
+where City = 'Madrid' or City = 'Berlin'
+
+-- Products'ı yazdırır
+select * from Products
+
+-- Stok miktarı 10 dan az olanları getir
+select ProductName , UnitsInStock
+from Products
+where UnitsInStock < 10
+order by UnitsInStock ASC
+
+-- Stok miktarı 0 olan ürünleri getir
+select ProductName , UnitsInStock
+from Products
+where UnitsInStock = 0
+
+-- LIKE
+-- C harfi ile başlayanları getir
+select * from Products
+select ProductName from Products
+where ProductName like 'C%'
+
+-- İçinde C harfi  geçenleri getir
+select * from Products
+select ProductName from Products
+where ProductName like '%C%'
+
+-- T harfi ile bitenleri getir
+select * from Products
+select ProductName from Products
+where ProductName like '%T'
+
+-- M harfi ile başlayan ve ülkesi USA olanları getir
+select FirstName , LastName
+from Employees
+where FirstName like 'M%' and Country = 'USA'
+
+-- Doğum tarihi 1948 Ocak ayıyla 1952 ocak ayı arasındakileri getir
+select FirstName , LastName , BirthDate
+from Employees
+where BirthDate >= '1948-01-01' and BirthDate <= '1952-01-01'
+
+--BETWEEN AND
+-- Stok miktarı 1 ile 10 arasındakiler gelsin
+select * from Products
+select ProductName , UnitsInStock
+from Products
+where UnitsInStock between 0 and 10
+
+-- Ücreti 10 ile 20 arasındakiler gelsin
+select ProductName , UnitPrice
+from Products
+where UnitPrice between 10 and 20
+order by UnitPrice ASC
+
+-- CategoryID si 3 5 7 olanlar gelsin
+select ProductName , UnitPrice , CategoryID
+from Products
+where CategoryID = 3 or CategoryID =5 or CategoryId =7
+order by UnitPrice ASC
+
+-- IN : Birden çok değeri aynı çatıda toplar
+-- CategoryID si 3 5 7 olanlar gelsin
+select ProductName , UnitPrice , CategoryID
+from Products
+where CategoryID in(3,5,7)
+order by UnitPrice ASC
+
+-- NOT IN : Birden çok değeri aynı çatıda toplar IN'in tersidir
+-- CategoryID si 3 5 7 olanlar hariç diğerleri gelsin
+select ProductName , UnitPrice , CategoryID
+from Products
+where CategoryID not in(3,5,7)
+order by UnitPrice ASC
+
+-- IS NOT NULL / IS NULL
+-- Null olanları getir
+select Title , Region
+from Employees
+where Region is null
+
+-- Null olmayanları getir
+select Title , Region
+from Employees
+where Region is not null
+
+--CASE WHEN THEN
+-- Stok miktarı 0 ise stokta yok yaz
+select * from Products
+select ProductName as [Ürün Adı] , UnitsInStock ,
+case UnitsInStock when 0 then 'Stokta Yok'
+else convert(varchar,UnitsInStock) end as [Stok Miktarı]
+from Products
