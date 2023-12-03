@@ -1,0 +1,1 @@
+# Veri-Tabani-SQL-Notlarim
